@@ -1,0 +1,56 @@
+query AuthorSelector($id: ID!) {
+  author(id: $id) {
+    name,
+    reviews {
+      game {
+        title
+      }
+      rating,
+      content
+    }
+  }
+}
+
+query ReviewQuery($id: ID!) {
+  review(id: $id) {
+    rating,
+    game {
+      title,
+      platform,
+      reviews {
+        rating
+      }
+    }
+  }
+}
+# Note the resolver chain! review -> game -> all reviews
+
+mutation DeleteMutation($id: ID!) {
+  deleteGame(id: $id) {
+    id,
+    title,
+    platform
+  }
+}
+
+mutation AddMutation($game: AddGameInput!) {
+  addGame(game: $game) {
+    id,
+    title,
+    platform
+  }
+}
+
+query Games {
+  games {
+    title,
+    platform
+  }
+}
+
+mutation UpdateGame($edits: EditGameInput!, $id: ID!) {
+  updateGame(edits: $edits, id: $id) {
+    title,
+    platform
+  }
+}
